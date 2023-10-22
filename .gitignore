@@ -1,0 +1,86 @@
+# Ignore compiled Java classes
+**/*.class
+
+# Ignore build output directories
+**/target/
+**/out/
+
+# Ignore Node.js modules
+**/node_modules/
+
+# Ignore generated distribution files
+**/dist/
+
+# Ignore IDE-specific files and directories
+**/.idea/
+**/.vscode/
+
+# Ignore log files
+**/*.log
+
+# Ignore temporary files
+**/*.tmp
+
+# Ignore user-specific files
+**/*.iml
+**/.idea/
+**/*.ipr
+**/*.iws
+
+# Ignore generated files by IDEs
+**/.idea
+**/*.iml
+**/*.iml
+**/*.iml
+**/*.iws
+
+# Ignore Java-specific files
+**/*.jar
+**/*.war
+**/*.ear
+**/*.class
+**/*.log
+**/*.out
+**/*.iml
+**/*.ipr
+**/*.iws
+
+# Ignore Maven-specific files and directories
+**/target/
+**/log/
+**/log.txt
+
+# Ignore Angular-specific files and directories
+**/node_modules/
+**/dist/
+**/tmp/
+
+# Ignore log files
+**/*.log
+
+# Ignore compiled JavaScript files
+**/*.js
+
+# Ignore generated documentation files
+**/docs/
+
+# Ignore configuration files
+**/*.config.js
+**/*.config.ts
+
+# Ignore Angular testing configuration
+**/karma.conf.js
+**/protractor.conf.js
+
+# Ignore browser-specific files
+**/*.js.map
+
+# Ignore built Angular projects
+**/dist/
+!**/.gitkeep
+
+# Ignore generated service worker
+**/ngsw-config.json
+
+# Ignore environment files
+**/src/environments/*.ts
