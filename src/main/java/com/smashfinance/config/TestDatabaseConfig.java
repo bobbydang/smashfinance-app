@@ -1,28 +1,23 @@
 package com.smashfinance.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import javax.sql.DataSource;
-
+@Profile("test")
 @Configuration
-public class DatabaseConfig {
+public class TestDatabaseConfig {
 
     @Bean
-    @Profile("production")
-    public DataSource productionDataSource() {
+    public DataSource testDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/smashfinance_production");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/smashfinance_test");
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres");
         return dataSource;
     }
-
 }

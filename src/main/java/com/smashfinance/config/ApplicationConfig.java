@@ -1,4 +1,4 @@
-package com.smashfinance;
+package com.smashfinance.config;
 
 import org.springframework.context.annotation.Configuration;
 
