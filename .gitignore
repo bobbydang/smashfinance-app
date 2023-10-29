@@ -14,6 +14,7 @@
 # Ignore IDE-specific files and directories
 **/.idea/
 **/.vscode/
+**/bin
 
 # Ignore log files
 **/*.log
@@ -44,6 +45,7 @@
 **/*.iml
 **/*.ipr
 **/*.iws
+
 
 # Ignore Maven-specific files and directories
 **/target/
