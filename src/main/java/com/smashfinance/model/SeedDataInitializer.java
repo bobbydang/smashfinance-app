@@ -1,28 +1,25 @@
 package com.smashfinance.model;
 
-import java.nio.file.Path;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.smashfinance.config.AppProperties;
 
 @Component
 public class SeedDataInitializer implements IInitializer {
 
-    @Value("${seed.data.path}")
-    private String seedDataPath;
-
-    private final Path path = null;
 
     private final static Logger logger = LogManager.getLogger(SeedDataInitializer.class);
 
-    public SeedDataInitializer() {
+    @Autowired
+    public SeedDataInitializer(AppProperties appProperties) {
         logger.info("Initializing SeedDataInitializer...");
+        logger.info("Seed data path: {}", appProperties.getSeedDataPath());
     }
 
     @Override
     public void initialize() {
-        logger.info("Initializing seed data...");
 
     }
 }
