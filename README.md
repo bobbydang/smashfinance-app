@@ -1,0 +1,1 @@
+# smashfinance-app
