@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import com.smashfinance.model.IInitializer;
+import com.smashfinance.entity.IInitializer;
 
 @Component
 public class AppRunner implements ApplicationRunner {

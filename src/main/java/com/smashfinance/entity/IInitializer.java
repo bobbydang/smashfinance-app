@@ -1,4 +1,4 @@
-package com.smashfinance.model;
+package com.smashfinance.entity;
 
 public interface IInitializer {
 

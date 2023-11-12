@@ -1,4 +1,4 @@
-package com.smashfinance.model;
+package com.smashfinance.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
