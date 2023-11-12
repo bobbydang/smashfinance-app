@@ -1,3 +1,6 @@
+# Ignore original source files
+**/.orig
+
 # Ignore compiled Java classes
 **/*.class
 

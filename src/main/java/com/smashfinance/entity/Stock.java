@@ -1,5 +1,6 @@
-package com.smashfinance.model;
+package com.smashfinance.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,11 +12,13 @@ import jakarta.persistence.Table;
 public class Stock {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "company_name", length = 100, nullable = false, unique = true)
     private String companyName;
 
+    @Column(name = "ticker_symbol", length = 10, nullable = false, unique = true)
     private String tickerSymbol;
 
     public String getCompanyName() {

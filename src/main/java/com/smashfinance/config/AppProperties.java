@@ -8,14 +8,32 @@ import org.springframework.stereotype.Component;
 public class AppProperties {
 
 
-    private String seedDataPath;
+    private String seedStocksDirectory;
+    private String seedStocksFile;
+    private String seedStockDataDirectory;
 
-    public String getSeedDataPath() {
-        return seedDataPath;
+    public String getSeedStocksFile() {
+        return seedStocksFile;
     }
 
-    public void setSeedDataPath(String seedDataPath) {
-        this.seedDataPath = seedDataPath;
+    public void setSeedStocksFile(String seedDataFile) {
+        this.seedStocksFile = seedDataFile;
+    }
+
+    public String getSeedStocksDirectory() {
+        return seedStocksDirectory;
+    }
+
+    public void setSeedStocksDirectory(String seedStocksDirectory) {
+        this.seedStocksDirectory = seedStocksDirectory;
+    }
+
+    public String getSeedStockDataDirectory() {
+        return seedStockDataDirectory;
+    }
+
+    public void setSeedStockDataDirectory(String seedStockDataFile) {
+        this.seedStockDataDirectory = seedStockDataFile;
     }
 
 
