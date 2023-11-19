@@ -24,7 +24,7 @@ import com.smashfinance.config.AppProperties;
 import com.smashfinance.entity.IInitializer;
 import com.smashfinance.entity.Stock;
 import com.smashfinance.entity.StockDatum;
-import com.smashfinance.respository.StockDataRepository;
+import com.smashfinance.respository.StockDatumRepository;
 import com.smashfinance.respository.StockRepository;
 
 
@@ -38,11 +38,11 @@ public class SeedDataInitializer implements IInitializer {
 
 
     private StockRepository stockRepository;
-    private StockDataRepository stockDataRepository;
+    private StockDatumRepository stockDataRepository;
 
     @Autowired
     public SeedDataInitializer(AppProperties appProperties, StockRepository stockRepository,
-            StockDataRepository stockDataRepository) {
+            StockDatumRepository stockDataRepository) {
 
         seedStockPath = appProperties.getSeedStocksDirectory() + appProperties.getSeedStocksFile();
         seedStockDataDirectory = appProperties.getSeedStockDataDirectory();

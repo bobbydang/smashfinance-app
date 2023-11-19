@@ -13,7 +13,7 @@ import com.smashfinance.services.StockService;
 
 @RestController
 @RequestMapping("/api/v1/stocks")
-public class StockController {
+public class StocksController {
 
     private StockService stockService;
 
@@ -23,7 +23,7 @@ public class StockController {
     }
 
     @Autowired
-    public StockController(StockService stockService) {
+    public StocksController(StockService stockService) {
         this.stockService = stockService;
 
     }
