@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.smashfinance.entity.StockDatum;
 
 @Repository
-public interface StockDataRepository extends JpaRepository<StockDatum, Long> {
+public interface StockDatumRepository extends JpaRepository<StockDatum, Long> {
 
         @Query("SELECT s FROM StockDatum s JOIN s.stock st WHERE st.companyName = :companyName")
         List<StockDatum> findStockDataByCompanyName(String companyName);

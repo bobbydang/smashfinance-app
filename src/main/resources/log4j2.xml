@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %C.%M:%L -  %msg%n" />
+        </Console>
+
+        <!-- Rolling File Appender -->
+        <RollingFile name="File"
+            fileName="/home/devops/tmp/smashfinance-app/logs/smashfinance-app.log"
+            filePattern="/home/devops/tmp/smashfinance-app/logs/smashfinance-app-%d{MM-dd-yyyy}.%i.log.gz">
+            <PatternLayout
+                pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %C.%M:%L -  %msg%n" />
+            <Policies>
+                <SizeAndTimeBasedRollingPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <!-- Logger for Hibernate SQL -->
+        <Logger name="org.hibernate.SQL" level="DEBUG" />
+
+        <!-- Logger for Hibernate type parameters -->
+        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+
+
+        <!-- Logger for Spring Framework type parameters -->
+        <Logger name="org.springframework" level="WARN" />
+
+        <!-- Logger for App type parameters -->
+        <Logger name="com.smashfinance" level="TRACE" />
+
+        <!-- Root Logger -->
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File" />
+        </Root>
+    </Loggers>
+</Configuration>
