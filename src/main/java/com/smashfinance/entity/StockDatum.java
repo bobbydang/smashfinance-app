@@ -3,6 +3,7 @@ package com.smashfinance.entity;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,6 +42,7 @@ public class StockDatum {
     private BigInteger volume;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     Stock stock;
 
     @Column(name = "date")

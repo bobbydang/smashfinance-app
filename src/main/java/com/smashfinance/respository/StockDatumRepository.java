@@ -37,6 +37,7 @@ public interface StockDatumRepository extends JpaRepository<StockDatum, Long> {
         @Query("SELECT s FROM StockDatum s JOIN s.stock st WHERE st.tickerSymbol = :tickerSymbol ORDER BY s.date ASC")
         List<StockDatum> findStockDataByTickerSymbolOrderByDateAsc(String tickerSymbol);
 
+
         @Query("SELECT s FROM StockDatum s JOIN s.stock st WHERE st.tickerSymbol = :tickerSymbol ORDER BY s.date DESC")
         List<StockDatum> findStockDataByTickerSymbolOrderByDateDesc(String tickerSymbol);
 
