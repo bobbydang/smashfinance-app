@@ -16,7 +16,6 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -24,8 +23,8 @@ import com.smashfinance.config.AppProperties;
 import com.smashfinance.entity.IInitializer;
 import com.smashfinance.entity.Stock;
 import com.smashfinance.entity.StockDatum;
-import com.smashfinance.respository.StockDatumRepository;
-import com.smashfinance.respository.StockRepository;
+import com.smashfinance.repository.StockDatumRepository;
+import com.smashfinance.repository.StockRepository;
 
 
 @Profile("dev")
@@ -40,11 +39,12 @@ public class SeedDataInitializer implements IInitializer {
     private StockRepository stockRepository;
     private StockDatumRepository stockDataRepository;
 
-    @Autowired
+
     public SeedDataInitializer(AppProperties appProperties, StockRepository stockRepository,
             StockDatumRepository stockDataRepository) {
 
-        seedStockPath = appProperties.getSeedStocksDirectory() + appProperties.getSeedStocksFile();
+        seedStockPath =
+                appProperties.getSeedStocksDirectory() + appProperties.getSeedStockDataFile();
         seedStockDataDirectory = appProperties.getSeedStockDataDirectory();
 
         this.stockRepository = stockRepository;
@@ -59,14 +59,11 @@ public class SeedDataInitializer implements IInitializer {
         if (!Files.exists(Paths.get(seedStockPath)))
             throw new IllegalStateException("Seed data path does not exist: " + seedStockPath);
 
-
         seedStocks();
         seedStockData();
-
     }
 
     private void seedStocks() {
-
         logger.info("Seeding stocks...");
 
         try (FileInputStream fileInputStream = new FileInputStream(seedStockPath)) {
@@ -83,7 +80,6 @@ public class SeedDataInitializer implements IInitializer {
     }
 
     private void seedStockData() {
-
         File directory = new File(seedStockDataDirectory);
         final int dateIdx = 0;
         final int openIdx = 1;
@@ -93,11 +89,9 @@ public class SeedDataInitializer implements IInitializer {
         final int adjCloseIdx = 5;
         final int volumeIdx = 6;
 
-
         if (directory.exists() && directory.isDirectory()) {
             File[] files = directory.listFiles();
             for (File file : files) {
-
                 logger.trace("Seeding stock data: " + file.getName());
 
                 String tickerSymbol = file.getName().substring(0, file.getName().indexOf("."));
@@ -107,11 +101,9 @@ public class SeedDataInitializer implements IInitializer {
                     throw new IllegalStateException("Stock not found: " + tickerSymbol);
 
                 try (Reader reader = new FileReader(file)) {
-
                     CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT);
 
                     for (CSVRecord record : csvParser) {
-
                         if (record.get(dateIdx).matches("^[a-zA-Z]+$")) {
                             continue;
                         }
@@ -126,36 +118,31 @@ public class SeedDataInitializer implements IInitializer {
                         BigDecimal lowPrice = new BigDecimal(record.get(lowIdx));
                         BigDecimal closePrice = new BigDecimal(record.get(closeIdx));
                         BigDecimal adjClosePrice = new BigDecimal(record.get(adjCloseIdx));
+
                         BigInteger volume = new BigInteger(record.get(volumeIdx));
 
                         StockDatum stockDatum = new StockDatum();
-                        stockDatum.setDate(localDate);
+                        stockDatum.setStock(stock.get());
+
+                        // set stockDatum fields
                         stockDatum.setOpeningPrice(openPrice);
                         stockDatum.setHighPrice(highPrice);
                         stockDatum.setLowPrice(lowPrice);
                         stockDatum.setClosingPrice(closePrice);
                         stockDatum.setAdjustedClosingPrice(adjClosePrice);
                         stockDatum.setVolume(volume);
+                        stockDatum.setDate(localDate);
 
-                        stockDatum.setStock(stock.get());
                         stockDataRepository.save(stockDatum);
 
                     }
 
-
                     csvParser.close();
-
-
                 } catch (Exception e) {
                     logger.error("Error seeding stock data: " + e.getMessage());
                 }
             }
-        } else {
-            logger.error(
-                    "Error seeding stock data: " + seedStockDataDirectory + " is not a directory");
         }
-
-        logger.trace("Finished seeding stock data");
-
     }
+
 }

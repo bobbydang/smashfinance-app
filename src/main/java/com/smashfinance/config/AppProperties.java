@@ -9,15 +9,15 @@ public class AppProperties {
 
 
     private String seedStocksDirectory;
-    private String seedStocksFile;
+    private String seedStockDataFile;
     private String seedStockDataDirectory;
 
-    public String getSeedStocksFile() {
-        return seedStocksFile;
+    public String getSeedStockDataFile() {
+        return seedStockDataFile;
     }
 
-    public void setSeedStocksFile(String seedDataFile) {
-        this.seedStocksFile = seedDataFile;
+    public void setSeedStockDataFile(String seedDataFile) {
+        this.seedStockDataFile = seedDataFile;
     }
 
     public String getSeedStocksDirectory() {

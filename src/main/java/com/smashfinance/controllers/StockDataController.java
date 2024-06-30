@@ -2,7 +2,6 @@ package com.smashfinance.controllers;
 
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +20,21 @@ public class StockDataController {
     @GetMapping("/ticker/symbol/{symbol}")
     public ResponseEntity<List<StockDatum>> getStockData(
             @PathVariable("symbol") String tickerSymbol) {
-        return new ResponseEntity<>(stockDatumService.findByTickerSymbol(tickerSymbol),
-                HttpStatus.OK);
+
+        if (tickerSymbol == null || tickerSymbol.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<StockDatum> stockData = stockDatumService.findByTickerSymbol(tickerSymbol);
+
+        if (stockData.isEmpty() || stockData == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(stockData, HttpStatus.OK);
+
     }
 
-    @Autowired
     public StockDataController(StockDatumService stockDatumService) {
         this.stockDatumService = stockDatumService;
     }

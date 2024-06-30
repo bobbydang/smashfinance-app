@@ -2,17 +2,16 @@ package com.smashfinance.services;
 
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import com.smashfinance.entity.Stock;
-import com.smashfinance.respository.StockRepository;
+import com.smashfinance.repository.StockRepository;
 
 @Service
 public class StockService {
 
     private final StockRepository stockRepository;
 
-    @Autowired
     public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
@@ -21,7 +20,7 @@ public class StockService {
         return stockRepository.findAll();
     }
 
-    public Optional<Stock> findById(Long id) {
+    public Optional<Stock> findById(@NonNull Long id) {
         return stockRepository.findById(id);
     }
 
@@ -33,11 +32,11 @@ public class StockService {
         return stockRepository.findByTickerSymbol(tickerSymbol);
     }
 
-    public Stock save(Stock stock) {
+    public Stock save(@NonNull Stock stock) {
         return stockRepository.save(stock);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(@NonNull Long id) {
         stockRepository.deleteById(id);
     }
 

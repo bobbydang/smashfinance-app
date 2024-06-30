@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import com.smashfinance.config.conditions.OnDevProfileCondition;
 import com.smashfinance.entity.IInitializer;
-import com.smashfinance.respository.StockDatumRepository;
-import com.smashfinance.respository.StockRepository;
+import com.smashfinance.repository.StockDatumRepository;
+import com.smashfinance.repository.StockRepository;
 import com.smashfinance.seed.SeedDataInitializer;
 
 @Configuration
