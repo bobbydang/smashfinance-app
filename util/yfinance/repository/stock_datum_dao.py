@@ -1,3 +1,4 @@
+import pandas as pd
 from pyrate_limiter import Duration, Limiter, MemoryQueueBucket, RequestRate
 import requests_cache
 import yfinance as yf
@@ -50,8 +51,7 @@ class StockDatumDAO:
                            end=end_date, session=self.__rate_limiter_session)
         data.reset_index(inplace=True)
 
-        # Convert datetime to date
-        data["Date"] = data["Date"].dt.date
+        data["Date"] = pd.to_datetime(data["Date"])
 
         # Get a session
         session = self.get_session()

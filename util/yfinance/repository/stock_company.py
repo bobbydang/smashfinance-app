@@ -9,10 +9,10 @@ from .database import Base
 
 
 class StockCompany(Base):
-    __tablename__ = 'stock_company'
+    __tablename__ = 'stocks'
     symbol = Column(String(10), primary_key=True)
-    name = Column(String(255))
+    name = Column(String(100), unique=True, nullable=False)
     sector = Column(String(255))
     industry = Column(String(255))
     country = Column(String(255))
-    stock_data = relationship('StockDatum', back_populates='stock_company')
+    stock_data = relationship('StockDatum', back_populates='stocks')

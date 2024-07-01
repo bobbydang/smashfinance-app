@@ -1,43 +1,34 @@
 package com.smashfinance.services;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import com.smashfinance.entity.Stock;
-import com.smashfinance.repository.StockRepository;
+import com.smashfinance.entity.StockCompany;
+import com.smashfinance.repository.StockCompanyRepository;
 
 @Service
 public class StockService {
 
-    private final StockRepository stockRepository;
+    private final StockCompanyRepository stockRepository;
 
-    public StockService(StockRepository stockRepository) {
+    public StockService(StockCompanyRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
-    public List<Stock> findAll() {
+    public List<StockCompany> findAll() {
         return stockRepository.findAll();
     }
 
-    public Optional<Stock> findById(@NonNull Long id) {
-        return stockRepository.findById(id);
-    }
-
-    public Optional<Stock> findByCompanyName(String companyName) {
+    public StockCompany findByCompanyName(String companyName) {
         return stockRepository.findByCompanyName(companyName);
     }
 
-    public Optional<Stock> findByTickerSymbol(String tickerSymbol) {
+    public StockCompany findByTickerSymbol(String tickerSymbol) {
         return stockRepository.findByTickerSymbol(tickerSymbol);
     }
 
-    public Stock save(@NonNull Stock stock) {
+    public StockCompany save(@NonNull StockCompany stock) {
         return stockRepository.save(stock);
-    }
-
-    public void deleteById(@NonNull Long id) {
-        stockRepository.deleteById(id);
     }
 
     public void deleteByCompanyName(String companyName) {

@@ -14,7 +14,8 @@
             <PatternLayout
                 pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %C.%M:%L -  %msg%n" />
             <Policies>
-                <SizeAndTimeBasedRollingPolicy size="50 MB" />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+                <TimeBasedTriggeringPolicy />
             </Policies>
             <DefaultRolloverStrategy max="10" />
         </RollingFile>
@@ -22,11 +23,8 @@
 
     <Loggers>
         <!-- Logger for Hibernate SQL -->
-        <Logger name="org.hibernate.SQL" level="DEBUG" />
-
-        <!-- Logger for Hibernate type parameters -->
-        <Logger name="org.hibernate.orm.jdbc.bind" level="TRACE" />
-        <Logger name="org.hibernate.orm.type" level="TRACE" />
+        <!-- <Logger name="org.hibernate.SQL" level="DEBUG" />
+        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" /> -->
 
 
         <!-- Logger for Spring Framework type parameters -->
@@ -35,8 +33,12 @@
         <!-- Logger for App type parameters -->
         <Logger name="com.smashfinance" level="TRACE" />
 
+        <Logger name="javax.management" level="WARN" />
+        <Logger name="sun.util" level="WARN" />
+        <Logger name="sun.rmi" level="WARN" />
+
         <!-- Root Logger -->
-        <Root level="INFO">
+        <Root level="DEBUG">
             <AppenderRef ref="Console" />
             <AppenderRef ref="File" />
         </Root>

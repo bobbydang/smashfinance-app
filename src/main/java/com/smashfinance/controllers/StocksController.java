@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.smashfinance.entity.Stock;
+import com.smashfinance.entity.StockCompany;
 import com.smashfinance.services.StockService;
 
 @RestController
@@ -20,9 +20,9 @@ public class StocksController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Stock>> getAll() {
+    public ResponseEntity<List<StockCompany>> getAll() {
         try {
-            List<Stock> stocks = stockService.findAll();
+            List<StockCompany> stocks = stockService.findAll();
             if (stocks == null || stocks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

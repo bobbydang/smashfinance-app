@@ -18,4 +18,6 @@ public class StockDatumService {
     public List<StockDatum> findByTickerSymbol(String tickerSymbol) {
         return stockDatumRepository.findStockDataByTickerSymbol(tickerSymbol);
     }
+
+
 }
