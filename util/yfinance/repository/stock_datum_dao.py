@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 
 from cached_limiter_session import CachedLimiterSession
 from .database import Base
-from .stock_company import StockCompany
+from .stock import Stock
 from .stock_datum import StockDatum
 
 
@@ -58,11 +58,11 @@ class StockDatumDAO:
 
         # Check if the StockCompany exists
         stock_company = session.query(
-            StockCompany).filter_by(symbol=ticker).first()
+            Stock).filter_by(symbol=ticker).first()
 
         # If the StockCompany does not exist, create it
         if not stock_company:
-            stock_company = StockCompany(
+            stock_company = Stock(
                 symbol=ticker,
                 # Placeholder name, should be replaced with real data
                 name=company.get("companyName", "Unknown"),
@@ -86,7 +86,7 @@ class StockDatumDAO:
                 close=row['Close'],
                 adj_close=row['Adj Close'],
                 volume=row['Volume'],
-                stock_company_symbol=ticker
+                stock_symbol=ticker
             )
             session.add(new_record)
 

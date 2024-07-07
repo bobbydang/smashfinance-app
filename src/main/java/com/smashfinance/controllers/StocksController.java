@@ -4,9 +4,11 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.smashfinance.entity.StockCompany;
+import com.smashfinance.dto.StockDTO;
+import com.smashfinance.entity.StockDatum;
 import com.smashfinance.services.StockService;
 
 @RestController
@@ -20,9 +22,9 @@ public class StocksController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<StockCompany>> getAll() {
+    public ResponseEntity<List<StockDTO>> getAll() {
         try {
-            List<StockCompany> stocks = stockService.findAll();
+            List<StockDTO> stocks = stockService.findAllStockDTO();
             if (stocks == null || stocks.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -31,4 +33,19 @@ public class StocksController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/{symbol}/stockdata")
+    public ResponseEntity<List<StockDatum>> getStockData(@PathVariable("symbol") String symbol) {
+        try {
+            List<StockDatum> stockData = stockService.findByTickerSymbol(symbol).getStockData();
+            if (stockData == null || stockData.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(stockData, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

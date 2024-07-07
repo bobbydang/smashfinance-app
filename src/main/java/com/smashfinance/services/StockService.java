@@ -3,31 +3,32 @@ package com.smashfinance.services;
 import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import com.smashfinance.entity.StockCompany;
-import com.smashfinance.repository.StockCompanyRepository;
+import com.smashfinance.dto.StockDTO;
+import com.smashfinance.entity.Stock;
+import com.smashfinance.repository.StockRepository;
 
 @Service
 public class StockService {
 
-    private final StockCompanyRepository stockRepository;
+    private final StockRepository stockRepository;
 
-    public StockService(StockCompanyRepository stockRepository) {
+    public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
-    public List<StockCompany> findAll() {
+    public List<Stock> findAll() {
         return stockRepository.findAll();
     }
 
-    public StockCompany findByCompanyName(String companyName) {
+    public Stock findByCompanyName(String companyName) {
         return stockRepository.findByCompanyName(companyName);
     }
 
-    public StockCompany findByTickerSymbol(String tickerSymbol) {
+    public Stock findByTickerSymbol(String tickerSymbol) {
         return stockRepository.findByTickerSymbol(tickerSymbol);
     }
 
-    public StockCompany save(@NonNull StockCompany stock) {
+    public Stock save(@NonNull Stock stock) {
         return stockRepository.save(stock);
     }
 
@@ -37,5 +38,9 @@ public class StockService {
 
     public void deleteByTickerSymbol(String tickerSymbol) {
         stockRepository.deleteByTickerSymbol(tickerSymbol);
+    }
+
+    public List<StockDTO> findAllStockDTO() {
+        return stockRepository.findAllStockDTO();
     }
 }

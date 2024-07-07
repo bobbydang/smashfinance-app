@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "stocks")
-public class StockCompany {
+public class Stock {
 
     @Id
     @Column(name = "symbol", length = 10)
@@ -27,7 +27,7 @@ public class StockCompany {
     @Column(name = "country", length = 255)
     private String country;
 
-    @OneToMany(mappedBy = "stockCompany")
+    @OneToMany(mappedBy = "stock")
     private List<StockDatum> stockData;
 
     public String getName() {

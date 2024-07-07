@@ -10,10 +10,10 @@ import com.smashfinance.entity.StockDatum;
 @Repository
 public interface StockDatumRepository extends JpaRepository<StockDatum, Long> {
 
-        @Query("SELECT sd FROM StockDatum sd WHERE sd.stockCompany.name = :companyName")
+        @Query("SELECT sd FROM StockDatum sd WHERE sd.stock.name = :companyName")
         List<StockDatum> findStockDataByCompanyName(String companyName);
 
-        @Query("SELECT sd FROM StockDatum sd JOIN sd.stockCompany sc WHERE sc.tickerSymbol = :tickerSymbol")
+        @Query("SELECT sd FROM StockDatum sd JOIN sd.stock sc WHERE sc.tickerSymbol = :tickerSymbol")
         List<StockDatum> findStockDataByTickerSymbol(String tickerSymbol);
 
         @SuppressWarnings("unchecked")

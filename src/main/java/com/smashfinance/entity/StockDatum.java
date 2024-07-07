@@ -42,9 +42,9 @@ public class StockDatum {
     private BigDecimal volume;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_company_symbol", referencedColumnName = "symbol")
+    @JoinColumn(name = "stock_symbol", referencedColumnName = "symbol")
     @JsonIgnore
-    StockCompany stockCompany;
+    Stock stock;
 
     @Column(name = "date")
     LocalDateTime date;
@@ -97,8 +97,8 @@ public class StockDatum {
         this.volume = volume;
     }
 
-    public StockCompany getStockCompany() {
-        return stockCompany;
+    public Stock getStock() {
+        return stock;
     }
 
 
@@ -110,8 +110,8 @@ public class StockDatum {
         this.date = date;
     }
 
-    public void setStockCompany(StockCompany stock) {
-        this.stockCompany = stock;
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 
 

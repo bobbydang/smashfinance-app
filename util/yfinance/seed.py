@@ -11,7 +11,7 @@ DatabaseUtil.create_drop_test_db()
 dev_stock = StockDatumDAO(engine_url_dev)
 test_stock = StockDatumDAO(engine_url_test)
 
-companies = SeedUtil.get_stock_company_data()
+companies = SeedUtil.get_stock_data()
 
 for company in companies.get("stocks"):
 

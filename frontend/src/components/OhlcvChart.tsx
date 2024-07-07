@@ -1,42 +1,66 @@
+import axios from "axios";
 import { createChart } from "lightweight-charts";
 import React, { useEffect, useRef } from "react";
+import { getStockDataApiUrl } from "../config/apiConfig";
+import StockData from "../interfaces/stockData";
+import StockDataChartFormat from "../interfaces/stockDataChartFormat";
+import TransformFunction from "../interfaces/transformFunction";
+
+const stockDataTransform: TransformFunction<
+  StockData[],
+  StockDataChartFormat[]
+> = {
+  transform: (data: StockData[]): StockDataChartFormat[] => {
+    return data.map((stockData) => {
+      const formattedDate = new Date(stockData.date)
+        .toISOString()
+        .split("T")[0];
+      return {
+        time: formattedDate,
+        open: stockData.openingPrice,
+        high: stockData.highPrice,
+        low: stockData.lowPrice,
+        close: stockData.adjustedClosingPrice,
+      };
+    });
+  },
+};
 
 const OhlcvChart: React.FC = () => {
   const chartContainerRef = useRef(null);
 
   useEffect(() => {
-    if (chartContainerRef.current) {
-      const chart = createChart(chartContainerRef.current, {
-        width: 800,
-        height: 400,
-      });
-      const candlestickSeries = chart.addCandlestickSeries();
+    const fetchData = async () => {
+      try {
+        const endpoint = getStockDataApiUrl("AA");
+        const response = await axios.get(endpoint, {
+          timeout: 60000,
+        });
 
-      const data = [
-        {
-          time: "2018-12-19",
-          open: 141.77,
-          high: 170.39,
-          low: 120.25,
-          close: 145.72,
-        },
-        {
-          time: "2018-12-20",
-          open: 145.77,
-          high: 178.39,
-          low: 121.25,
-          close: 143.72,
-        },
-        // more data points...
-      ];
+        const stockData = await response.data;
+        const data = stockDataTransform.transform(stockData);
 
-      candlestickSeries.setData(data);
-    }
+        if (chartContainerRef.current) {
+          const chart = createChart(chartContainerRef.current, {
+            width: 800,
+            height: 400,
+          });
+          const candlestickSeries = chart.addCandlestickSeries();
+
+          candlestickSeries.setData(data);
+        }
+      } catch (error) {
+        console.error("Error rendering chart", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div ref={chartContainerRef}>
       <h1> hello world</h1>
+      <h1> again </h1>
     </div>
   );
 };

@@ -6,11 +6,11 @@ from sqlalchemy.orm import sessionmaker
 
 from .database import Base
 
-from .stock_company import StockCompany
+from .stock import Stock
 from .stock_datum import StockDatum
 
 
-class StockCompanyDAO:
+class StockDAO:
     def __init__(self, db_url):
         self.__engine = create_engine(db_url)
 
@@ -33,7 +33,7 @@ class StockCompanyDAO:
     def add_stock_company(self, stock_company_data):
         session = self.get_session()
         try:
-            stock_company = StockCompany(**stock_company_data)
+            stock_company = Stock(**stock_company_data)
             session.add(stock_company)
             session.commit()
         except:

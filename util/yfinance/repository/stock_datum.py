@@ -16,6 +16,6 @@ class StockDatum(Base):
     close = Column(Numeric(10, 2))
     adj_close = Column(Numeric(10, 2))
     volume = Column(Numeric(20, 0))
-    stock_company_symbol = Column(
+    stock_symbol = Column(
         String(10), ForeignKey("stocks.symbol"))
-    stocks = relationship("StockCompany", back_populates="stock_data")
+    stocks = relationship("Stock", back_populates="stock_data")

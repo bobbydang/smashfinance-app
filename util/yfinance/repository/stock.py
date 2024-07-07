@@ -8,7 +8,7 @@ from sqlalchemy import (
 from .database import Base
 
 
-class StockCompany(Base):
+class Stock(Base):
     __tablename__ = 'stocks'
     symbol = Column(String(10), primary_key=True)
     name = Column(String(100), unique=True, nullable=False)
