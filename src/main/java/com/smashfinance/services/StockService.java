@@ -1,18 +1,17 @@
 package com.smashfinance.services;
 
 import java.util.List;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import com.smashfinance.dto.StockDTO;
 import com.smashfinance.entity.Stock;
-import com.smashfinance.respository.StockRepository;
+import com.smashfinance.repository.StockRepository;
 
 @Service
 public class StockService {
 
     private final StockRepository stockRepository;
 
-    @Autowired
     public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
@@ -21,24 +20,16 @@ public class StockService {
         return stockRepository.findAll();
     }
 
-    public Optional<Stock> findById(Long id) {
-        return stockRepository.findById(id);
-    }
-
-    public Optional<Stock> findByCompanyName(String companyName) {
+    public Stock findByCompanyName(String companyName) {
         return stockRepository.findByCompanyName(companyName);
     }
 
-    public Optional<Stock> findByTickerSymbol(String tickerSymbol) {
+    public Stock findByTickerSymbol(String tickerSymbol) {
         return stockRepository.findByTickerSymbol(tickerSymbol);
     }
 
-    public Stock save(Stock stock) {
+    public Stock save(@NonNull Stock stock) {
         return stockRepository.save(stock);
-    }
-
-    public void deleteById(Long id) {
-        stockRepository.deleteById(id);
     }
 
     public void deleteByCompanyName(String companyName) {
@@ -47,5 +38,9 @@ public class StockService {
 
     public void deleteByTickerSymbol(String tickerSymbol) {
         stockRepository.deleteByTickerSymbol(tickerSymbol);
+    }
+
+    public List<StockDTO> findAllStockDTO() {
+        return stockRepository.findAllStockDTO();
     }
 }

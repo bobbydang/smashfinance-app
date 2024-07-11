@@ -1,50 +1,68 @@
 package com.smashfinance.entity;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.Table;
 
 
 
 @Entity
 @Table(name = "stock_data")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "StockDatum.findWeeklyStockDataByTickerSymbol",
+                query = "classpath:sql/findWeeklyStockDataByTickerSymbolQuery.sql",
+                resultClass = StockDatum.class),
+        @NamedNativeQuery(name = "StockDatum.findMonthlyStockDataByTickerSymbol",
+                query = "classpath:sql/findMonthlyStockDataByTickerSymbolQuery.sql",
+                resultClass = StockDatum.class),
+        @NamedNativeQuery(name = "StockDatum.findYearlyStockDataByTickerSymbol",
+                query = "classpath:sql/findYearlyStockDataByTickerSymbolQuery.sql",
+                resultClass = StockDatum.class)
+// Add more @NamedNativeQuery entries as needed
+})
+
 public class StockDatum {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "closing_price", precision = 15, scale = 8)
+    @Column(name = "close", precision = 10, scale = 2)
     private BigDecimal closingPrice;
 
-    @Column(name = "adjusted_closing_price", precision = 15, scale = 8)
+    @Column(name = "adj_close", precision = 10, scale = 2)
     private BigDecimal adjustedClosingPrice;
 
-    @Column(name = "opening_price", precision = 15, scale = 8)
+    @Column(name = "open", precision = 10, scale = 2)
     private BigDecimal openingPrice;
 
-    @Column(name = "high_price", precision = 15, scale = 8)
+    @Column(name = "high", precision = 10, scale = 2)
     private BigDecimal highPrice;
 
-    @Column(name = "low_price", precision = 15, scale = 8)
+    @Column(name = "low", precision = 10, scale = 2)
     private BigDecimal lowPrice;
 
-    @Column(name = "volume", precision = 10)
-    private BigInteger volume;
+    @Column(name = "volume", precision = 20, scale = 0)
+    private BigDecimal volume;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stock_symbol", referencedColumnName = "symbol")
+    @JsonIgnore
     Stock stock;
 
     @Column(name = "date")
-    LocalDate date;
+    LocalDateTime date;
 
     public BigDecimal getAdjustedClosingPrice() {
         return adjustedClosingPrice;
@@ -86,11 +104,11 @@ public class StockDatum {
         this.lowPrice = lowPrice.setScale(8);
     }
 
-    public BigInteger getVolume() {
+    public BigDecimal getVolume() {
         return volume;
     }
 
-    public void setVolume(BigInteger volume) {
+    public void setVolume(BigDecimal volume) {
         this.volume = volume;
     }
 
@@ -99,11 +117,11 @@ public class StockDatum {
     }
 
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

@@ -1,0 +1,18 @@
+{"properties": [
+  {
+    "name": "seedStocksDirectory",
+    "type": "java.lang.String",
+    "description": "The directory where the stock file used for seeding are stored"
+  },
+  {
+    "name": "seedStockDataDirectory",
+    "type": "java.lang.String",
+    "description": "The directory where the stock data seed values are stored"
+  
+  },
+  {
+    "name": "seedStockDataFile",
+    "type": "java.lang.String",
+    "description": "The file declaring all the stock data used in seeding"
+  }
+]}
