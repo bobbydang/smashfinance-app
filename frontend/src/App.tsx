@@ -4,6 +4,7 @@ import StockPage from "./pages/StockPage";
 
 import "./App.css";
 import MainMenuNavBar from "./components/MainMenuNavBar";
+import StockDataPage from "./pages/StockDataPage";
 
 class App extends Component<{}, {}> {
   render() {
@@ -14,6 +15,10 @@ class App extends Component<{}, {}> {
           <MainMenuNavBar />
           <Routes>
             <Route path="/stocks" element={<StockPage />} />
+            <Route
+              path="/stocks/:symbol/stockdata"
+              element={<StockDataPage />}
+            />
           </Routes>
         </div>
       </Router>

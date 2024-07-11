@@ -6,6 +6,10 @@ import StockData from "../interfaces/stockData";
 import StockDataChartFormat from "../interfaces/stockDataChartFormat";
 import TransformFunction from "../interfaces/transformFunction";
 
+interface OhlcvChartProps {
+  symbol: string;
+}
+
 const stockDataTransform: TransformFunction<
   StockData[],
   StockDataChartFormat[]
@@ -26,13 +30,13 @@ const stockDataTransform: TransformFunction<
   },
 };
 
-const OhlcvChart: React.FC = () => {
+const OhlcvChart: React.FC<OhlcvChartProps> = ({ symbol }) => {
   const chartContainerRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const endpoint = getStockDataApiUrl("AA");
+        const endpoint = getStockDataApiUrl(symbol);
         const response = await axios.get(endpoint, {
           timeout: 60000,
         });
@@ -42,7 +46,7 @@ const OhlcvChart: React.FC = () => {
 
         if (chartContainerRef.current) {
           const chart = createChart(chartContainerRef.current, {
-            width: 800,
+            width: 1280,
             height: 400,
           });
           const candlestickSeries = chart.addCandlestickSeries();
@@ -57,12 +61,7 @@ const OhlcvChart: React.FC = () => {
     fetchData();
   }, []);
 
-  return (
-    <div ref={chartContainerRef}>
-      <h1> hello world</h1>
-      <h1> again </h1>
-    </div>
-  );
+  return <div ref={chartContainerRef}></div>;
 };
 
 export default OhlcvChart;

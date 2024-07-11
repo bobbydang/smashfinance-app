@@ -17,7 +17,7 @@ public class StockDataController {
 
     private final StockDatumService stockDatumService;
 
-    @GetMapping("/ticker/symbol/{symbol}")
+    @GetMapping("/{symbol}/daily")
     public ResponseEntity<List<StockDatum>> getStockData(
             @PathVariable("symbol") String tickerSymbol) {
 
@@ -25,7 +25,65 @@ public class StockDataController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<StockDatum> stockData = stockDatumService.findByTickerSymbol(tickerSymbol);
+        List<StockDatum> stockData =
+                stockDatumService.findDailyStockDataByTickerSymbol(tickerSymbol);
+
+        if (stockData.isEmpty() || stockData == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(stockData, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{symbol}/weekly")
+    public ResponseEntity<List<StockDatum>> getWeeklyStockData(
+            @PathVariable("symbol") String tickerSymbol) {
+
+        if (tickerSymbol == null || tickerSymbol.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<StockDatum> stockData =
+                stockDatumService.findWeeklyStockDataByTickerSymbol(tickerSymbol);
+
+        if (stockData.isEmpty() || stockData == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(stockData, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{symbol}/monthy")
+    public ResponseEntity<List<StockDatum>> getMonthlyStockData(
+            @PathVariable("symbol") String tickerSymbol) {
+
+        if (tickerSymbol == null || tickerSymbol.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<StockDatum> stockData =
+                stockDatumService.findMontlyStockDataByTickerSymbol(tickerSymbol);
+
+        if (stockData.isEmpty() || stockData == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(stockData, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{symbol}/yearly")
+    public ResponseEntity<List<StockDatum>> getYearlyStockData(
+            @PathVariable("symbol") String tickerSymbol) {
+
+        if (tickerSymbol == null || tickerSymbol.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        List<StockDatum> stockData =
+                stockDatumService.findYearlyStockDataByTickerSymbol(tickerSymbol);
 
         if (stockData.isEmpty() || stockData == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
