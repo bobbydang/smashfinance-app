@@ -1,6 +1,6 @@
 package com.smashfinance.repository;
 
-public class StockDatumRepositoryQueryConstants {
+public class StockRepositoryQueryConstants {
     public static final String FIND_WEEKLY_STOCK_DATA_BY_TICKER_SYMBOL = """
             WITH FirstDayOfWeek AS (
                 SELECT
@@ -18,7 +18,7 @@ public class StockDatumRepositoryQueryConstants {
                     FirstDayOfWeek
             )
             SELECT
-                *
+              *
             FROM
                 FirstRecordOfDay
             WHERE
@@ -37,7 +37,7 @@ public class StockDatumRepositoryQueryConstants {
                     stock_symbol = ?1
             )
             SELECT
-                *
+               *
             FROM
                 MonthlyData
             WHERE
@@ -59,7 +59,7 @@ public class StockDatumRepositoryQueryConstants {
                     stock_symbol = ?1
             )
             SELECT
-                *
+               *
             FROM
                 YearlyData
             WHERE
