@@ -1,14 +1,29 @@
 package com.smashfinance.entity;
 
 import java.util.List;
+import com.smashfinance.repository.StockRepositoryQueryConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "stocks")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Stock.findWeeklyStockDataByTickerSymbol",
+                query = StockRepositoryQueryConstants.FIND_WEEKLY_STOCK_DATA_BY_TICKER_SYMBOL,
+                resultClass = StockDatum.class),
+        @NamedNativeQuery(name = "Stock.findMonthlyStockDataByTickerSymbol",
+                query = StockRepositoryQueryConstants.FIND_MONTHLY_STOCK_DATA_BY_TICKER_SYMBOL,
+                resultClass = StockDatum.class),
+        @NamedNativeQuery(name = "Stock.findYearlyStockDataByTickerSymbol",
+                query = StockRepositoryQueryConstants.FIND_YEARLY_STOCK_DATA_BY_TICKER_SYMBOL,
+                resultClass = StockDatum.class)
+
+})
 public class Stock {
 
     @Id

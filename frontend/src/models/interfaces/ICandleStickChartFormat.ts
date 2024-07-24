@@ -1,4 +1,4 @@
-interface StockDataChartFormat {
+interface ICandleStickChartFormat {
   time: string;
   open: number;
   high: number;
@@ -6,4 +6,4 @@ interface StockDataChartFormat {
   close: number;
 }
 
-export default StockDataChartFormat;
+export default ICandleStickChartFormat;

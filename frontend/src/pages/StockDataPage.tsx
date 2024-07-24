@@ -1,12 +1,18 @@
 import React from "react";
-import OhlcvChart from "../components/OhlcvChart";
 import { useParams } from "react-router-dom";
+import LineSeriesChart from "../components/LineSeriesChart";
+import CandleStickChart from "../components/CandleStickChart";
+import { withChartContainer } from "../components/WithChartContainer";
+
+const LineSeriesChartWithContainer = withChartContainer(LineSeriesChart);
+const CandleStickChartWithContainer = withChartContainer(CandleStickChart);
 
 const StockDataPage: React.FC = () => {
   const { symbol } = useParams<{ symbol: string }>();
   return (
-    <div>
-      <OhlcvChart symbol={symbol}></OhlcvChart>
+    <div className="main-container">
+      <CandleStickChartWithContainer symbol={symbol} interval="1D" />
+      <LineSeriesChartWithContainer symbol={symbol} interval="1W" />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-interface StockData {
+interface IStockData {
   id: number; // Assuming BigInteger is mapped to number for simplicity
   date: Date;
   openingPrice: number;
@@ -9,4 +9,4 @@ interface StockData {
   volume: number;
 }
 
-export default StockData;
+export default IStockData;
