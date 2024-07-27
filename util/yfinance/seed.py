@@ -1,6 +1,6 @@
 
-from smashfinance_common import DatabaseUtil
-from smashfinance_common import StockDatumDAO
+from smashfinance_common.database import DatabaseUtil
+from smashfinance_common.repository import StockDatumDAO
 
 from smashfinance_common.database import engine_url_dev, engine_url_test
 from seed_util import SeedUtil

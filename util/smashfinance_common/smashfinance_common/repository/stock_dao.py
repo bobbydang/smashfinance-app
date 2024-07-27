@@ -6,8 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 from ..database import Base
 
-from ..stock_data import Stock
-from ..stock_data import StockDatum
+from ..stock_data import Stock, StockDatum
 
 
 class StockDAO:
