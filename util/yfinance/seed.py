@@ -1,8 +1,8 @@
 
-from repository.database_util import DatabaseUtil
-from repository.stock_datum_dao import StockDatumDAO
+from smashfinance_common import DatabaseUtil
+from smashfinance_common import StockDatumDAO
 
-from repository.database import engine_url_dev, engine_url_test
+from smashfinance_common.database import engine_url_dev, engine_url_test
 from seed_util import SeedUtil
 
 DatabaseUtil.create_drop_dev_db()
