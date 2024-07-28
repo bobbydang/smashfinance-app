@@ -1,9 +1,0 @@
-stocks:
-  - tickerSymbol: TECK
-    companyName: Teck Resources Limited
-  - tickerSymbol: AA
-    companyName: Alcoa Corporation
-  - tickerSymbol: AMD
-    companyName: Advanced Micro Devices, Inc.
-  - tickerSymbol: BABA
-    companyName: Alibaba Group Holding Limited
