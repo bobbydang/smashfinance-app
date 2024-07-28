@@ -2,10 +2,10 @@
 from sqlalchemy.orm import sessionmaker
 
 from ..database import DatabaseUtil
-from ..stock_data import Stock
+from ..models import Stock
 
 
-class StockDAO:
+class StockRepository:
     def __init__(self):
         self.__engine = DatabaseUtil.DB_ENGINE
         self.__base = DatabaseUtil.BASE
@@ -26,11 +26,10 @@ class StockDAO:
             self.__session.close()
             self.__session = None
 
-    def add_stock_company(self, stock_company_data):
+    def add_stock(self, stock):
         session = self.get_session()
         try:
-            stock_company = Stock(**stock_company_data)
-            session.add(stock_company)
+            session.add(stock)
             session.commit()
         except:
             session.rollback()

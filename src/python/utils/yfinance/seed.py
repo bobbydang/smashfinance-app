@@ -1,13 +1,13 @@
 
 from smashfinance_common.database import DatabaseUtil
-from smashfinance_common.repository import StockDatumDAO
+from smashfinance_common.repository import StockDatumRespository
 
 from smashfinance_common.database import engine_url
 from seed_util import SeedUtil
 
 DatabaseUtil.create_drop_db()
 
-stock = StockDatumDAO()
+stock = StockDatumRespository()
 
 companies = SeedUtil.get_stock_data()
 

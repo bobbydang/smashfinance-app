@@ -17,3 +17,8 @@ class StockDatum(DatabaseUtil.BASE):
     stock_symbol = Column(
         String(10), ForeignKey("stocks.symbol"))
     stocks = relationship("Stock", back_populates="stock_data")
+
+    def __repr__(self):
+        return (f'<StockDatum(date={self.date}, stock_symbol={self.stock_symbol}, '
+                f'open={self.open}, high={self.high}, low={self.low}, '
+                f'adj_close={self.adj_close}, volume={self.volume})>')

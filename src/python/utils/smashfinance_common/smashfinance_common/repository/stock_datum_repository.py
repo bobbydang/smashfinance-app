@@ -5,13 +5,13 @@ import yfinance as yf
 
 from sqlalchemy.orm import sessionmaker
 
-from ..repository.cached_limiter_session import CachedLimiterSession
+from .cached_limiter_session import CachedLimiterSession
 from ..database import DatabaseUtil
-from ..stock_data import Stock
-from ..stock_data import StockDatum
+from ..models import Stock
+from ..models import StockDatum
 
 
-class StockDatumDAO:
+class StockDatumRespository:
 
     def __init__(self):
 
@@ -76,7 +76,7 @@ class StockDatumDAO:
 
         # Create and add new StockDatum records
         for index, row in data.iterrows():
-            new_record = StockDatum(
+            stock_datum = StockDatum(
                 date=row['Date'],
                 open=row['Open'],
                 high=row['High'],
@@ -86,7 +86,7 @@ class StockDatumDAO:
                 volume=row['Volume'],
                 stock_symbol=ticker
             )
-            session.add(new_record)
+            session.add(stock_datum)
 
         # Commit the transaction
         session.commit()

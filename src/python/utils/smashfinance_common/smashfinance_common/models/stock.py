@@ -15,3 +15,6 @@ class Stock(DatabaseUtil.BASE):
     industry = Column(String(255))
     country = Column(String(255))
     stock_data = relationship('StockDatum', back_populates='stocks')
+
+    def __repr__(self):
+        return f'<Stock(symbol={self.symbol}, name={self.name})>'
