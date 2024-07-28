@@ -14,14 +14,17 @@ numpy==2.0.1
 pandas==2.2.2
 peewee==3.17.6
 platformdirs==4.2.2
+psycopg2==2.9.9
 pyrate-limiter==2.10.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pytz==2024.1
+PyYAML==6.0.1
 requests==2.32.3
 requests-cache==1.2.1
 requests-ratelimiter==0.7.0
 six==1.16.0
+-e git+ssh://git@github.com/bobbydang/smashfinance-app.git@0da07b046bb60107821f5a026f23afc6290da8fc#egg=smashfinance_common&subdirectory=src/python/utils/smashfinance_common
 soupsieve==2.5
 SQLAlchemy==2.0.31
 SQLAlchemy-Utils==0.41.2
