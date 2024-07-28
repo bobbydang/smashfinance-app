@@ -1,12 +1,10 @@
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Numeric, String
+from sqlalchemy.orm import relationship
+
+from ..database import DatabaseUtil
 
 
-from sqlalchemy import BigInteger, Column, Date, DateTime, ForeignKey, Numeric, Sequence, String
-from sqlalchemy.orm import relationship, declarative_base
-
-from ..database import Base
-
-
-class StockDatum(Base):
+class StockDatum(DatabaseUtil.BASE):
     __tablename__ = "stock_data"
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     date = Column(DateTime(timezone=False))

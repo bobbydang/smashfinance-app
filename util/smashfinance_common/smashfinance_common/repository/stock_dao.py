@@ -1,27 +1,24 @@
-from sqlalchemy import (
-    create_engine,
-)
 
 from sqlalchemy.orm import sessionmaker
 
-from ..database import Base
-
-from ..stock_data import Stock, StockDatum
+from ..database import DatabaseUtil
+from ..stock_data import Stock
 
 
 class StockDAO:
-    def __init__(self, db_url):
-        self.__engine = create_engine(db_url)
+    def __init__(self):
+        self.__engine = DatabaseUtil.DB_ENGINE
+        self.__base = DatabaseUtil.BASE
 
         # Create tables in the correct order
-        Base.metadata.create_all(self.__engine, checkfirst=True)
+        self.__base.metadata.create_all(self.__engine, checkfirst=True)
 
-        self.__SessionFactory = sessionmaker(bind=self.__engine)
+        self.__sessionFactory = sessionmaker(bind=self.__engine)
         self.__session = None
 
     def get_session(self):
         if self.__session is None:
-            self.__session = self.__SessionFactory()
+            self.__session = self.__sessionFactory()
         return self.__session
 
     def close_session(self):

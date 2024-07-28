@@ -1,14 +1,13 @@
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
     Column,
     String,
 )
 
-from ..database import Base
+from ..database import DatabaseUtil
 
 
-class Stock(Base):
+class Stock(DatabaseUtil.BASE):
     __tablename__ = 'stocks'
     symbol = Column(String(10), primary_key=True)
     name = Column(String(100), unique=True, nullable=False)

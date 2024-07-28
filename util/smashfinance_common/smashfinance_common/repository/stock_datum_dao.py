@@ -2,26 +2,24 @@ import pandas as pd
 from pyrate_limiter import Duration, Limiter, MemoryQueueBucket, RequestRate
 import requests_cache
 import yfinance as yf
-from sqlalchemy import (
-    create_engine
-)
 
 from sqlalchemy.orm import sessionmaker
 
 from ..repository.cached_limiter_session import CachedLimiterSession
-from ..database import Base
+from ..database import DatabaseUtil
 from ..stock_data import Stock
 from ..stock_data import StockDatum
 
 
 class StockDatumDAO:
 
-    def __init__(self, db_url):
+    def __init__(self):
 
-        self.__engine = create_engine(db_url)
+        self.__engine = DatabaseUtil.DB_ENGINE
+        self.__base = DatabaseUtil.BASE
 
         # Create tables in the correct order
-        Base.metadata.create_all(self.__engine, checkfirst=True)
+        self.__base.metadata.create_all(self.__engine, checkfirst=True)
 
         self.__rate_limiter_session = CachedLimiterSession(
             limiter=Limiter(

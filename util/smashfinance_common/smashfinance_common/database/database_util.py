@@ -1,26 +1,18 @@
+from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database, drop_database
+from sqlalchemy.ext.declarative import declarative_base
 
-from .database import engine_url_dev, engine_url_test, dev_engine, test_engine
+from .database_config import engine_url
 
 
 class DatabaseUtil:
 
-    @staticmethod
-    def create_drop_dev_db():
-        if database_exists(engine_url_dev):
-            drop_database(engine_url_dev)
-        create_database(engine_url_dev)
+    BASE = declarative_base()
 
-    @staticmethod
-    def create_drop_test_db():
-        if database_exists(engine_url_test):
-            drop_database(engine_url_test)
-        create_database(engine_url_test)
+    DB_ENGINE = create_engine(engine_url)
 
-    @staticmethod
-    def get_dev_engine():
-        return dev_engine
-
-    @staticmethod
-    def get_test_engine():
-        return test_engine
+    @ staticmethod
+    def create_drop_db():
+        if database_exists(engine_url):
+            drop_database(engine_url)
+        create_database(engine_url)

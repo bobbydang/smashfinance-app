@@ -1,7 +1,5 @@
-from smashfinance_common.utils.dynamic_import import dynamic_import
+from .stock_dao import StockDAO
+from .stock_datum_dao import StockDatumDAO
+from .cached_limiter_session import CachedLimiterSession
 
-all_classes, __all__ = dynamic_import(__name__)
-
-globals().update(all_classes)
-
-__all__ = all_classes.keys()
+__all__ = ['StockDAO', 'StockDatumDAO', 'CachedLimiterSession']

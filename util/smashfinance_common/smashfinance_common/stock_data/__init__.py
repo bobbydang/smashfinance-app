@@ -1,7 +1,4 @@
-from smashfinance_common.utils.dynamic_import import dynamic_import
+from .stock_datum import StockDatum
+from .stock import Stock
 
-all_classes, __all__ = dynamic_import(__name__)
-
-globals().update(all_classes)
-
-__all__ = all_classes.keys()
+__all__ = ['StockDatum', 'Stock']
