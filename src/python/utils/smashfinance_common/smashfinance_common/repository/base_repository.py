@@ -14,7 +14,23 @@ class BaseRepository:
 
     @contextmanager
     def session_scope(self):
-        """Provide a transactional scope around a series of operations."""
+        """Provide a transactional scope around a series of operations.
+
+           This context manager creates a session using the _SessionFactory and
+           yields it to the caller. After the caller is done with the session,
+           the changes are committed. If an exception occurs during the operations,
+           the changes are rolled back and the exception is re-raised. Finally,
+           the session is closed.
+
+           Usage:
+           ```
+           with self.session_scope() as session:
+               # Perform database operations using the session
+           ```
+
+           Returns:
+           A session object for performing database operations.
+       """
         session = self._SessionFactory()
         try:
             yield session
@@ -26,27 +42,88 @@ class BaseRepository:
             session.close()
 
     def get(self, model, id):
+        """
+        Retrieve a record from the database by its ID.
+
+        Args:
+            model: The model class representing the database table.
+            id: The ID of the record to retrieve.
+
+        Returns:
+            The retrieved record, or None if no record is found.
+        """
         with self.session_scope() as session:
             return session.query(model).filter(model.id == id).first()
 
     def get_all(self, model):
+        """
+        Retrieve all instances of the specified model from the database.
+
+        Args:
+            model: The model class to query.
+
+        Returns:
+            A list of all instances of the specified model.
+        """
         with self.session_scope() as session:
             return session.query(model).all()
 
-    def create(self, model):
+    def create(self, model, unique_fields=None, commit=True):
+        """
+        Creates a new model instance and adds it to the database.
+
+        Args:
+            model: The model instance to be created.
+            unique_fields: A list of field names that should be checked for uniqueness.
+            commit: A boolean indicating whether to commit the changes to the database.
+
+        Returns:
+            The created model instance.
+
+        """
         with self.session_scope() as session:
+            if unique_fields:
+                filters = {field: getattr(model, field)
+                           for field in unique_fields}
+                existing_model = session.query(
+                    model).filter_by(**filters).first()
+                if existing_model:
+                    return existing_model
             session.add(model)
-            session.refresh(model)
+            if commit:
+                session.commit()
+                session.refresh(model)
             return model
 
     def update(self, model, data):
+        """
+        Updates the given model with the provided data.
+
+        Args:
+            model: The model object to be updated.
+            data: A dictionary containing the updated attribute values.
+
+        Returns:
+            The updated model object.
+        """
         with self.session_scope() as session:
             for key, value in data.items():
                 setattr(model, key, value)
+            session.commit()
             session.refresh(model)
             return model
 
     def delete(self, model):
+        """
+        Deletes the given model from the database.
+
+        Args:
+            model: The model object to be deleted.
+
+        Returns:
+            The deleted model object.
+        """
         with self.session_scope() as session:
             session.delete(model)
+            session.commit()
             return model
