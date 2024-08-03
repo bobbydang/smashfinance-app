@@ -12,7 +12,7 @@ class ExponentialMovingAverage(DatabaseUtil.BASE):
     stock_symbol = Column(String(10), ForeignKey(
         'stocks.symbol'), nullable=False)
     stock = relationship(
-        'Stock', back_populates='exponential_moving_averages')
+        'Stock', backref='exponential_moving_averages')
 
     def __repr__(self):
-        return f'<ExponentialMovingAverage(date={self.date}, value={self.value}, period={self.period})>'
+        return f'<ExponentialMovingAverage(stock_symbol={self.stock_symbol}, date={self.date}, value={self.value}, period={self.period})>'

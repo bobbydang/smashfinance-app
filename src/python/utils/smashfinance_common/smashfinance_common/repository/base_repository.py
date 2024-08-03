@@ -35,6 +35,7 @@ class BaseRepository:
         try:
             yield session
             session.commit()
+
         except Exception:
             session.rollback()
             raise
@@ -68,32 +69,30 @@ class BaseRepository:
         with self.session_scope() as session:
             return session.query(model).all()
 
-    def create(self, model, unique_fields=None, commit=True):
+    def create(self, model, unique_fields=None):
         """
         Creates a new model instance and adds it to the database.
 
         Args:
             model: The model instance to be created.
-            unique_fields: A list of field names that should be checked for uniqueness.
+            unique_fields: A list of field names that should be unique for the model.
             commit: A boolean indicating whether to commit the changes to the database.
 
         Returns:
-            The created model instance.
+            None if a model with the same unique fields already exists, otherwise None.
 
         """
+        model_class = type(model)
         with self.session_scope() as session:
             if unique_fields:
                 filters = {field: getattr(model, field)
                            for field in unique_fields}
                 existing_model = session.query(
-                    model).filter_by(**filters).first()
+                    model_class).filter_by(**filters).first()
                 if existing_model:
-                    return existing_model
+                    return
+
             session.add(model)
-            if commit:
-                session.commit()
-                session.refresh(model)
-            return model
 
     def update(self, model, data):
         """
@@ -107,11 +106,14 @@ class BaseRepository:
             The updated model object.
         """
         with self.session_scope() as session:
+            if not session.contains(model):
+                model = session.merge(model)
+
             for key, value in data.items():
                 setattr(model, key, value)
-            session.commit()
-            session.refresh(model)
-            return model
+                session.refresh(model)
+
+        return model
 
     def delete(self, model):
         """
@@ -125,5 +127,4 @@ class BaseRepository:
         """
         with self.session_scope() as session:
             session.delete(model)
-            session.commit()
             return model

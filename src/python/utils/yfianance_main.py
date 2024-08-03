@@ -3,7 +3,7 @@ from smashfinance_common.database import DatabaseUtil
 from smashfinance_common.repository import StockDatumRespository
 
 from smashfinance_common.database import engine_url
-from seed_util import SeedUtil
+from yfinance.seed_util import SeedUtil
 
 
 def main():
