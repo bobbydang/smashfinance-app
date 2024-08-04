@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+from smashfinance_common.common.smash_finance_logger import SmashFinanceLogger
 from smashfinance_common.database.database_util import DatabaseUtil
 from sqlalchemy.orm import sessionmaker
 
@@ -11,6 +12,7 @@ class BaseRepository:
         self._base.metadata.create_all(self._engine, checkfirst=True)
         self._SessionFactory = sessionmaker(bind=self._engine)
         self._session = None
+        self._logger = SmashFinanceLogger().get_logger(__name__)
 
     @contextmanager
     def session_scope(self):
@@ -127,4 +129,5 @@ class BaseRepository:
         """
         with self.session_scope() as session:
             session.delete(model)
-            return model
+
+        return model

@@ -1,6 +1,8 @@
 
+
 import numpy as np
 from smashfinance_common.common.decorators import singleton
+from smashfinance_common.common.smash_finance_logger import SmashFinanceLogger
 from smashfinance_common.models.exponential_moving_average import ExponentialMovingAverage
 from smashfinance_common.repository.exponential_moving_average_repository import ExponentialMovingAverageRepository
 from smashfinance_common.repository.stock_datum_repository import StockDatumRespository
@@ -13,6 +15,7 @@ import talib
 class EmaIndicatorService:
     def __init__(self):
         self._OFFSET = ConfigurationService().get_pagination_config().get("offset")
+        self._logger = SmashFinanceLogger().get_logger(__name__)
 
     def _get_data(self, stock_symbol):
         stock_data = []
@@ -56,7 +59,6 @@ class EmaIndicatorService:
                 period=period,
                 stock_symbol=stock_symbol)
             if not np.isnan(ema_value):
-                # print(ema_instance)
-
+                # self._logger.info(ema_instance)
                 repository.create(ema_instance, [
                     "date", "period", "stock_symbol"])
