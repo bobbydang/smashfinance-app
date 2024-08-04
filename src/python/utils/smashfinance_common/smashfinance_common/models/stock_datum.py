@@ -16,7 +16,7 @@ class StockDatum(DatabaseUtil.BASE):
     volume = Column(Numeric(20, 0))
     stock_symbol = Column(
         String(10), ForeignKey("stocks.symbol"))
-    stocks = relationship("Stock", back_populates="stock_data")
+    stocks = relationship("Stock", backref="stock_data")
 
     def __repr__(self):
         return (f'<StockDatum(date={self.date}, stock_symbol={self.stock_symbol}, '

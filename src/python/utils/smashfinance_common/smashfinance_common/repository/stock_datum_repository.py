@@ -14,7 +14,7 @@ class StockDatumRespository(BaseRepository):
 
     def __init__(self):
         super().__init__()
-        self.__rate_limiter_session = CachedLimiterSession(
+        self._rate_limiter_session = CachedLimiterSession(
             limiter=Limiter(
                 RequestRate(10, Duration.SECOND * 5)
             ),  # max 10 requests per 5 seconds
@@ -26,7 +26,7 @@ class StockDatumRespository(BaseRepository):
         # Download stock data
         ticker = company.get("tickerSymbol")
         data = yf.download(ticker, start=start_date,
-                           end=end_date, session=self.__rate_limiter_session)
+                           end=end_date, session=self._rate_limiter_session)
         data.reset_index(inplace=True)
 
         data["Date"] = pd.to_datetime(data["Date"])
@@ -66,3 +66,32 @@ class StockDatumRespository(BaseRepository):
                     stock_symbol=ticker
                 )
                 session.add(stock_datum)
+
+    def get_stock_data_by_stock_symbol(self, stock_symbol):
+        with self.session_scope() as session:
+            stock_data = session.query(StockDatum).filter(
+                StockDatum.stock_symbol == stock_symbol).order_by(StockDatum.date).all()
+            return [self._convert_to_dto(stock_datum) for stock_datum in stock_data]
+
+    def get_stock_data_by_stock_symbol_and_offset(self, stock_symbol, offset, limit):
+        with self.session_scope() as session:
+
+            stock_data = session.query(StockDatum).filter(StockDatum.stock_symbol == stock_symbol).order_by(
+                StockDatum.date).offset(offset).limit(limit).all()
+            return [self._convert_to_dto(stock_datum) for stock_datum in stock_data]
+
+    def stock_data_by_stock_symbol_count(self, stock_symbol):
+        with self.session_scope() as session:
+            return session.query(StockDatum).filter(StockDatum.stock_symbol == stock_symbol).count()
+
+    def _convert_to_dto(self, stock_datum):
+        return StockDatum(
+            date=stock_datum.date,
+            open=stock_datum.open,
+            high=stock_datum.high,
+            low=stock_datum.low,
+            close=stock_datum.close,
+            adj_close=stock_datum.adj_close,
+            volume=stock_datum.volume,
+            stock_symbol=stock_datum.stock_symbol
+        )

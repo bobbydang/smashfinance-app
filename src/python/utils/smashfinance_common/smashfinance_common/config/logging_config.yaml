@@ -1,0 +1,21 @@
+version: 1
+disable_existing_loggers: false
+formatters:
+  standard:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(lineno)d - %(message)s"
+handlers:
+  file_handler:
+    class: logging.handlers.RotatingFileHandler
+    formatter: standard
+    level: INFO
+    maxBytes: 52428800 # 50MB
+    backupCount: 10
+  console_handler:
+    class: logging.StreamHandler
+    formatter: standard
+    level: DEBUG
+loggers:
+  "":
+    handlers: [file_handler, console_handler]
+    level: DEBUG
+    propagate: true
