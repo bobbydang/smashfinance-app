@@ -12,7 +12,6 @@ class BaseRepository:
         self._base.metadata.create_all(self._engine, checkfirst=True)
         self._SessionFactory = sessionmaker(bind=self._engine)
         self._session = None
-        self._logger = SmashFinanceLogger().get_logger(__name__)
 
     @contextmanager
     def session_scope(self):
